@@ -7,7 +7,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "https://resumegenie-qtr6.onrender.com/auth/google/callback", // Redirect after login
+      callbackURL: "/auth/google/callback", // Redirect after login
     },
     (accessToken, refreshToken, profile, done) => {
       console.log("Google Profile:", profile);
