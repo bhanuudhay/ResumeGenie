@@ -2,7 +2,7 @@ const express = require("express");
 const passport = require("passport");
 const session = require("express-session");
 const RedisStore = require("connect-redis").default;
-const { createClient } = require("redis");
+const { createClient } = require("ioredis");
 require("dotenv").config();
 require("./config/passportConfig"); // Load Google OAuth config
 
@@ -11,24 +11,18 @@ const resumeRoutes = require("./routes/resumeRoutes");
 
 const app = express();
 
-// ✅ Redis Client Setup
-const redisClient = createClient({
-  url: process.env.REDIS_URL || "redis://localhost:6379", // Update for production
-});
+// ✅ Create Redis Client
+const redisClient = createClient({ url: process.env.REDIS_URL });
 redisClient.connect().catch(console.error);
 
-// ✅ Session Middleware with Redis Store
+// ✅ Use Redis for session storage
 app.use(
   session({
     store: new RedisStore({ client: redisClient }),
-    secret: process.env.SESSION_SECRET || "supersecretkey", // Secret key for session encryption
+    secret: process.env.SESSION_SECRET, // Secret key for session encryption
     resave: false,
     saveUninitialized: false,
-    cookie: {
-      secure: process.env.NODE_ENV === "production", // Secure cookies in production
-      httpOnly: true,
-      maxAge: 24 * 60 * 60 * 1000, // 24 hours
-    },
+    cookie: { maxAge: 24 * 60 * 60 * 1000 }, // 24 hours
   })
 );
 
