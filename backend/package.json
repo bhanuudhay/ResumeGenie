@@ -18,7 +18,8 @@
     "express-async-error": "^0.0.2",
     "express-session": "^1.18.1",
     "passport": "^0.7.0",
-    "ioredis": "^5.6.0",
+    "connect-redis": "^7.0.0",
+    "ioredis": "^5.3.1",
     "passport-google-oauth20": "^2.0.0"
   }
 }
