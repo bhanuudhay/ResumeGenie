@@ -13,7 +13,10 @@ const app = express();
 
 // ✅ Create and connect Redis client
 const redisClient = createClient({
-  url: process.env.REDIS_URL,
+  url: process.env.REDIS_URL, // Ensure this is set correctly in Render
+  socket: {
+    reconnectStrategy: 3, // Retry connection 3 times if it fails
+  },
   legacyMode: true, // Needed for older session handling
 });
 
