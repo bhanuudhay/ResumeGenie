@@ -19,6 +19,10 @@ router.get(
   }
 );
 
+router.get("/login", (req, res) => {
+  res.redirect("/auth/google");
+});
+
 //  3: Logout Route
 router.get("/logout", (req, res) => {
   req.logout((err) => {
